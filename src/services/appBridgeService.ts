@@ -16,7 +16,7 @@ export class AppBridgeService {
   async makeApiCall(endpoint: string, _options: RequestInit = {}): Promise<any> {
     // For UI demonstration, we're using mock data instead of real API calls
     // Real API calls require a backend proxy for embedded apps
-    console.log('App Bridge API call requested for:', endpoint, '(using mock data instead)');
+    console.log('App Bridge API call requested for:', endpoint, '(using mock data for demo)');
     
     // Return a promise that resolves to mock data structure
     return Promise.resolve({

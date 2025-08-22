@@ -1,7 +1,7 @@
 {
   "name": "ppu-client",
   "version": "1.0.0",
-  "description": "Shopify Product Price Updater - Embedded App",
+  "description": "Shopify Product Price Updater - Frontend App",
   "type": "module",
   "scripts": {
     "dev": "vite",
