@@ -13,7 +13,7 @@ export class AppBridgeService {
   }
 
   // Make authenticated API calls using App Bridge
-  async makeApiCall(endpoint: string, options: RequestInit = {}): Promise<any> {
+  async makeApiCall(endpoint: string, _options: RequestInit = {}): Promise<any> {
     // For UI demonstration, we're using mock data instead of real API calls
     // Real API calls require a backend proxy for embedded apps
     console.log('App Bridge API call requested for:', endpoint, '(using mock data instead)');
@@ -24,13 +24,6 @@ export class AppBridgeService {
       products: [],
       variant: {},
     });
-  }
-
-  // Helper method to get shop from host
-  private getShopFromHost(): string {
-    const urlParams = new URLSearchParams(window.location.search);
-    const shop = urlParams.get('shop');
-    return shop || 'your-store.myshopify.com';
   }
 
   // Get collections using App Bridge
