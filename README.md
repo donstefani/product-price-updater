@@ -1,60 +1,103 @@
-# Product Price Updater - Shopify Embedded App
+# Product Price Updater - Frontend
 
-A Shopify embedded app for bulk updating product prices with a clean, modern UI built using Polaris.
+React-based Shopify app frontend for product price management. Built with Vite, TypeScript, and Shopify App Bridge for seamless integration with the Shopify admin interface.
 
 ## Features
 
-- Collection search and selection
-- Product listing and filtering
-- Bulk price updates (coming soon)
-- Modern React + TypeScript architecture
-- Shopify Polaris UI components
+- Product search and filtering
+- Bulk price updates
+- Real-time Shopify integration via App Bridge
+- TypeScript for type safety
+- Vite for fast development and building
 
 ## Tech Stack
 
-- **Frontend**: React 18 + TypeScript
-- **Build Tool**: Vite
-- **UI Framework**: Shopify Polaris
-- **Shopify Integration**: App Bridge
+- **React 18** with TypeScript
+- **Vite** for build tooling
+- **Shopify Polaris** for UI components
+- **Shopify App Bridge** for admin integration
+- **Node.js 22** compatible
 
-## Setup
+## Development
 
-1. **Install dependencies:**
+### Prerequisites
+
+- Node.js 22 or higher
+- npm or yarn
+
+### Setup
+
+1. Clone the repository
+2. Install dependencies:
    ```bash
    npm install
    ```
 
-2. **Environment Configuration:**
-   - Copy `env.example` to `.env`
-   - Add your Shopify app credentials and configuration
-
-3. **Development:**
+3. Start the development server:
    ```bash
    npm run dev
    ```
 
-4. **Build:**
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+## Deployment
+
+This app is automatically deployed to GitHub Pages via GitHub Actions.
+
+### Manual Deployment
+
+1. Build the app:
    ```bash
    npm run build
    ```
+
+2. The built files will be in the `dist/` directory
+
+### GitHub Pages
+
+The app is automatically deployed to GitHub Pages when you push to the `main` branch. The deployment URL will be:
+`https://[your-username].github.io/product-price-updater-frontend/`
+
+## Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+VITE_SHOPIFY_API_KEY=your_shopify_api_key
+VITE_SHOPIFY_SHOP_DOMAIN=your_shop_domain
+```
 
 ## Project Structure
 
 ```
 src/
-├── components/          # UI Components
-│   ├── common/         # Reusable components
-│   ├── collections/    # Collection-related components
-│   ├── products/       # Product-related components
-│   └── layout/         # Layout components
-├── hooks/              # Custom React hooks
-├── services/           # API and external services
-├── types/              # TypeScript type definitions
-├── utils/              # Utility functions
-├── constants/          # App constants
-└── pages/              # Main page components
+├── components/          # React components
+│   ├── collections/     # Collection-related components
+│   ├── common/          # Shared components
+│   ├── layout/          # Layout components
+│   └── products/        # Product-related components
+├── constants/           # App constants
+├── hooks/               # Custom React hooks
+├── pages/               # Page components
+├── services/            # API and external services
+├── types/               # TypeScript type definitions
+└── utils/               # Utility functions
 ```
 
-## Development
+## Contributing
 
-The app follows the Single Responsibility Principle with well-organized, reusable components. Each component is designed to be simple and easy to understand.
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.
