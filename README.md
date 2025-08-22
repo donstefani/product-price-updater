@@ -9,6 +9,7 @@ React-based Shopify app frontend for product price management. Built with Vite, 
 - Real-time Shopify integration via App Bridge
 - TypeScript for type safety
 - Vite for fast development and building
+- Automated GitHub Pages deployment
 
 ## Tech Stack
 
