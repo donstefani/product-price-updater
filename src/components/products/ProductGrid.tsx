@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 import { Card, Text, Badge, Thumbnail, Button } from '@shopify/polaris';
 import { ShopifyProduct } from '@/types/shopify';
 
-// Dropdown variant list component
 function VariantList({ variants, options, isExpanded, onToggle }: { 
   variants: any[], 
   options: any[],
@@ -13,15 +12,42 @@ function VariantList({ variants, options, isExpanded, onToggle }: {
 }) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
+  const [isPositioned, setIsPositioned] = useState(false);
 
   useEffect(() => {
     if (isExpanded && buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const dropdownHeight = 300; // maxHeight from CSS
+      const spaceBelow = viewportHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      
+      let top: number;
+      if (spaceBelow >= dropdownHeight || spaceBelow > spaceAbove) {
+        // Dropdown below button
+        top = rect.bottom + 4;
+      } else {
+        // Dropdown above button
+        top = rect.top - dropdownHeight - 4;
+      }
+      
+      const viewportWidth = window.innerWidth;
+      const dropdownWidth = Math.max(rect.width, 400);
+      let left = rect.left;
+      
+      // Ensure dropdown doesn't extend beyond right edge of viewport
+      if (left + dropdownWidth > viewportWidth) {
+        left = Math.max(10, viewportWidth - dropdownWidth - 10);
+      }
+      
       setDropdownPosition({
-        top: rect.bottom + 4,
-        left: rect.left,
+        top: Math.max(10, top), // Ensure at least 10px from top of viewport
+        left: left,
         width: rect.width
       });
+      setIsPositioned(true);
+    } else {
+      setIsPositioned(false);
     }
   }, [isExpanded]);
 
@@ -73,7 +99,7 @@ function VariantList({ variants, options, isExpanded, onToggle }: {
         </span>
       </button>
       
-      {isExpanded && createPortal(
+      {isExpanded && isPositioned && createPortal(
         <div 
           data-variant-dropdown
           style={{ 
@@ -208,18 +234,18 @@ function VariantList({ variants, options, isExpanded, onToggle }: {
 
 interface ProductGridProps {
   products: ShopifyProduct[];
+  selectedProducts: ShopifyProduct[];
   onProductSelect?: (product: ShopifyProduct) => void;
   onProductsSelect?: (products: ShopifyProduct[]) => void;
 }
 
-export function ProductGrid({ products, onProductSelect, onProductsSelect }: ProductGridProps) {
+export function ProductGrid({ products, selectedProducts: parentSelectedProducts, onProductSelect, onProductsSelect }: ProductGridProps) {
   const [expandedProducts, setExpandedProducts] = useState<Set<string>>(new Set());
-  const [selectedProducts, setSelectedProducts] = useState<Set<string>>(new Set());
+  const selectedProducts = new Set(parentSelectedProducts.map(p => p.id));
 
-  // Reset expanded products and selected products when products change (new collection selected)
+  // Reset expanded products when products change (new collection selected)
   useEffect(() => {
     setExpandedProducts(new Set());
-    setSelectedProducts(new Set());
   }, [products]);
 
   const toggleProductExpansion = (productId: string) => {
@@ -239,7 +265,6 @@ export function ProductGrid({ products, onProductSelect, onProductsSelect }: Pro
     } else {
       newSelected.add(productId);
     }
-    setSelectedProducts(newSelected);
     
     // Notify parent of selection change
     if (onProductsSelect) {
@@ -249,9 +274,6 @@ export function ProductGrid({ products, onProductSelect, onProductsSelect }: Pro
   };
 
   const selectAllProducts = () => {
-    const allProductIds = new Set(products.map(p => p.id));
-    setSelectedProducts(allProductIds);
-    
     // Notify parent of selection change
     if (onProductsSelect) {
       onProductsSelect(products);
@@ -259,8 +281,6 @@ export function ProductGrid({ products, onProductSelect, onProductsSelect }: Pro
   };
 
   const clearAllSelections = () => {
-    setSelectedProducts(new Set());
-    
     // Notify parent of selection change
     if (onProductsSelect) {
       onProductsSelect([]);
