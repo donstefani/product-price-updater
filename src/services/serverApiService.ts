@@ -240,4 +240,43 @@ export class ServerApiService {
     const endpoint = `/api/csv/status`;
     return this.makeApiCall(endpoint);
   }
+
+  // Price Change API endpoints
+  async processPriceChanges(csvData: any[], userId: string, userName: string, collectionName: string): Promise<any> {
+    const endpoint = `/api/price-change/process`;
+    return this.makeApiCall(endpoint, {
+      method: 'POST',
+      body: JSON.stringify({
+        csvData,
+        userId,
+        userName,
+        collectionName,
+      }),
+    });
+  }
+
+  async getPriceChangeHistory(shopDomain?: string, userId?: string, limit?: number): Promise<any> {
+    let endpoint = `/api/price-change/history`;
+    const params = new URLSearchParams();
+    
+    if (shopDomain) params.append('shopDomain', shopDomain);
+    if (userId) params.append('userId', userId);
+    if (limit) params.append('limit', limit.toString());
+    
+    if (params.toString()) {
+      endpoint += `?${params.toString()}`;
+    }
+    
+    return this.makeApiCall(endpoint);
+  }
+
+  async getRollbackData(operationId: string): Promise<any> {
+    const endpoint = `/api/price-change/rollback/${encodeURIComponent(operationId)}`;
+    return this.makeApiCall(endpoint);
+  }
+
+  async getRepeatData(operationId: string): Promise<any> {
+    const endpoint = `/api/price-change/repeat/${encodeURIComponent(operationId)}`;
+    return this.makeApiCall(endpoint);
+  }
 }
