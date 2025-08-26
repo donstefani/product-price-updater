@@ -47,6 +47,7 @@ export function useShopifyAuth(): UseShopifyAuthReturn {
   // Initialize server API service
   useEffect(() => {
     const serverBaseUrl = import.meta.env.VITE_SERVER_BASE_URL || 'http://localhost:3001/dev';
+    console.log('Server base URL:', serverBaseUrl);
     setServerApiService(new ServerApiService({ baseUrl: serverBaseUrl }));
   }, []);
 
