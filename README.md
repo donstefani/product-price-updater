@@ -71,8 +71,9 @@ The app is automatically deployed to GitHub Pages when you push to the `main` br
 Create a `.env` file in the root directory:
 
 ```env
-VITE_SHOPIFY_API_KEY=your_shopify_api_key
-VITE_SHOPIFY_SHOP_DOMAIN=your_shop_domain
+VITE_SERVER_BASE_URL
+VITE_API_BASE_URL
+VITE_APP_URL
 ```
 
 ## Project Structure
