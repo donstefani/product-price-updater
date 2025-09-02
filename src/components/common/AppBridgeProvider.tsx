@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Provider as AppBridgeProvider } from '@shopify/app-bridge-react';
 
 interface AppBridgeProviderProps {
   children: React.ReactNode;
@@ -17,12 +16,7 @@ export function AppBridgeProviderWrapper({ children }: AppBridgeProviderProps) {
 
     if (shop && host) {
       // Shopify embedded app scenario
-      const appBridgeConfig = {
-        apiKey: import.meta.env.VITE_SHOPIFY_API_KEY || '',
-        host: host,
-        forceRedirect: true,
-      };
-      setConfig(appBridgeConfig);
+      setConfig({ isShopify: true });
     } else {
       // Localhost development scenario - no App Bridge needed
       setConfig({ isLocalhost: true });
@@ -50,10 +44,11 @@ export function AppBridgeProviderWrapper({ children }: AppBridgeProviderProps) {
     return <>{children}</>;
   }
 
-  // For Shopify embedded app, use App Bridge
-  return (
-    <AppBridgeProvider config={config}>
-      {children}
-    </AppBridgeProvider>
-  );
+  // For Shopify embedded app, render without App Bridge (since we don't need it)
+  if (config?.isShopify) {
+    return <>{children}</>;
+  }
+
+  // Fallback: render without App Bridge
+  return <>{children}</>;
 }
