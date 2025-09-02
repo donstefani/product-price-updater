@@ -120,8 +120,8 @@ export function HomePage() {
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                       >
-                        <circle cx="10" cy="10" r="9" stroke="#d82c0d" strokeWidth="2" fill="none"/>
-                        <path d="M10 6v4M10 14h.01" stroke="#d82c0d" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="10" cy="10" r="9" stroke="rgb(0, 128, 96)" strokeWidth="2" fill="none"/>
+                        <path d="M10 6v4M10 14h.01" stroke="rgb(0, 128, 96)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </button>
                   </div>
